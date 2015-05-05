@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 4, 2015, 11:19:51 PM
+    Author     : toddschmidt
+*/
+.navbar-default{
+    background-color: transparent;
+}
+
+header {
+    height: 500px;
+    -webkit-filter: blur(5px);
+    background-image: url(http://julianmarsh.com/wp-content/uploads/2014/06/music-equipment.jpg);
+    background-position: center;
+    background-repeat: none;
+    display: block;
+    position: fixed;
+    z-index: 1;
+    width: 100%
+}
+
+.search {
+    position: fixed;
+    z-index: 9999;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+}
+
+.search form{
+    margin-top: 233px;
+    alignment-adjust: center;
+    
+}
