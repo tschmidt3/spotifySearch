@@ -17,25 +17,22 @@ header {
     background-image: url(http://julianmarsh.com/wp-content/uploads/2014/06/music-equipment.jpg);
     background-position: center;
     background-repeat: none;
-    display: block;
-    position: fixed;
-    z-index: 1;
-    width: 100%
+    background-size: cover;
+}
+
+input {
+    background: #fff;
 }
 
 .search {
-    position: fixed;
-    z-index: 9999;
+    position: relative;
+    top: -5em;
+/*    position: fixed;*/
+/*    z-index: 9999;*/
 }
 
 .center {
     margin-left: auto;
     margin-right: auto;
     width: 1000px;
-}
-
-.search form{
-    margin-top: 233px;
-    alignment-adjust: center;
-    
 }
