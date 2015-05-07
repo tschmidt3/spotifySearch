@@ -11,13 +11,25 @@ and open the template in the editor.
     background-color: transparent;
 }
 
+.borders{
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    padding: 15px 0px;
+}
+
+.thirds{
+    padding: 6px 0px;
+}
+
 header {
-    height: 500px;
+    height: 400px;
     -webkit-filter: blur(5px);
     background-image: url(http://julianmarsh.com/wp-content/uploads/2014/06/music-equipment.jpg);
     background-position: center;
     background-repeat: none;
     background-size: cover;
+    overflow: hidden;
 }
 
 input {
@@ -26,9 +38,7 @@ input {
 
 .search {
     position: relative;
-    top: -5em;
-/*    position: fixed;*/
-/*    z-index: 9999;*/
+    top: -17em;
 }
 
 .center {
@@ -36,3 +46,4 @@ input {
     margin-right: auto;
     width: 1000px;
 }
+
