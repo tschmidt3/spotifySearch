@@ -47,3 +47,7 @@ input {
     width: 1000px;
 }
 
+#albumImage {
+    max-width: 100px;
+}
+
