@@ -12,20 +12,34 @@ $(document).ready( function() {
     });
 });
 
-var showAlbum = function(album) {
+var showAlbum = function(album, songNames) {
 	
 	// clone our result template code
 	var result = $('.album .template').clone();
 	
 	// Set the question properties in result
 	var name = result.find('#albumName');
-	//questionElem.attr('href', question.link);
 	name.text(album.name);
         
         var image = result.find('#albumImage');
         image.attr('src', album.images[0].url);
+        var link = result.find('#albumLink');
+        link.attr('href', album.external_urls.spotify);
+        
+        var temp = result.find("#popularSong");
+        temp.html(songNames);
+        
+        if(songNames){
+            
+        } else{
+            temp.text("This is the artists whos albums are shown below");
+        };
         
 	return result;
+};
+
+var showSong = function(){
+    
 };
 
 var search = function(artist){
@@ -39,7 +53,8 @@ var search = function(artist){
         type: "GET",
         })
     .done(function(result){
-        console.log(result.artists.items[0].name);
+        var temp = showAlbum(result.artists.items[0]);
+        $('.answers').append(temp);
         var artistID = result.artists.items[0].id;
         albumLookup(artistID);
     })
@@ -57,14 +72,16 @@ var albumLookup = function(artistID){
         type: "GET"
         })
     .done(function(result){
-        console.log(result);
         var albumName = result.items[0].name; 
         var albumID = result.items[0].id; 
+        //songLookup(albumID);
         var albumImage = result.items[0].images[0].url;
             $.each(result.items, function(i, item) {
-			var temp = showAlbum(item);
-                        console.log(temp);
-			$('.answers').append(temp);
+			
+                        
+                        //var temp = showAlbum(item);
+			//$('.answers').append(temp);
+                        songLookup(item.id, item);
                     });
             
     })
@@ -72,6 +89,32 @@ var albumLookup = function(artistID){
             var errorElem = showError(error);
             $('.search-results').append(errorElem);
     });
+};
+
+var songLookup = function(albumID, albumInfo){
+    var tempURL = "https://api.spotify.com/v1/albums/"+albumID+"/tracks";
+    var result = $.ajax({
+        url: tempURL,
+        dataType: "json",
+        type: "GET"
+        })
+    .done(function(result){
+        var songNames = "";
+        $.each(result.items, function(i, item){
+            var temp = i + 1;
+            songNames = songNames + " [" + temp + ". "+ item.name +"]";
+        });
+        //console.log(songNames);
+        
+        var temp = showAlbum(albumInfo, songNames);
+	$('.answers').append(temp);
+        
+    })
+    .fail(function(jqXHR, error, errorThrown){
+        var errorElem = showError(error);
+        $('.search-results').append(errorElem);
+    });
+    
 };
     
         
