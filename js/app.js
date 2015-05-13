@@ -13,13 +13,14 @@ $(document).ready( function() {
 });
 
 var showAlbum = function(album, songNames) {
-	
+        
 	// clone our result template code
 	var result = $('.album .template').clone();
 	
 	// Set the question properties in result
 	var name = result.find('#albumName');
 	name.text(album.name);
+        name.attr('href', album.external_urls.spotify);
         
         var image = result.find('#albumImage');
         image.attr('src', album.images[0].url);
@@ -27,10 +28,9 @@ var showAlbum = function(album, songNames) {
         link.attr('href', album.external_urls.spotify);
         
         var temp = result.find("#popularSong");
-        temp.html(songNames);
+        //temp.html(songNames);
         
         if(songNames){
-            
         } else{
             temp.text("This is the artists whos albums are shown below");
         };
@@ -38,7 +38,17 @@ var showAlbum = function(album, songNames) {
 	return result;
 };
 
-var showSong = function(){
+var showSong = function(song, link){
+    $.each(song, function(i, item){
+        //$('.template:last ul').append('<li>' + song[i] + '</li>');
+        $('.template:last ol').append(
+            $("<li>", {}).append(
+                $("<a>", { href: link[i], target:"_blank"}).text(
+                    song[i]
+            )
+        )
+    );
+    });
     
 };
 
@@ -77,12 +87,8 @@ var albumLookup = function(artistID){
         //songLookup(albumID);
         var albumImage = result.items[0].images[0].url;
             $.each(result.items, function(i, item) {
-			
-                        
-                        //var temp = showAlbum(item);
-			//$('.answers').append(temp);
-                        songLookup(item.id, item);
-                    });
+                songLookup(item.id, item);
+            });
             
     })
     .fail(function(jqXHR, error, errorThrown){
@@ -99,16 +105,21 @@ var songLookup = function(albumID, albumInfo){
         type: "GET"
         })
     .done(function(result){
+        
         var songNames = "";
+        var songArray = [];
+        var linkArray = [];
         $.each(result.items, function(i, item){
             var temp = i + 1;
             songNames = songNames + " [" + temp + ". "+ item.name +"]";
+            songArray[i]=item.name;
+            linkArray[i] = item.external_urls.spotify;
         });
-        //console.log(songNames);
+        console.log(linkArray);
         
         var temp = showAlbum(albumInfo, songNames);
 	$('.answers').append(temp);
-        
+        showSong(songArray,linkArray);
     })
     .fail(function(jqXHR, error, errorThrown){
         var errorElem = showError(error);
